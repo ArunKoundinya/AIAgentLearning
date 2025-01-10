@@ -2,3 +2,7 @@ phidata
 python-dotenv
 groq
 duckduckgo-search
+googlesearch-python
+pycountry
+packaging
+openai
