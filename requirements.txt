@@ -6,3 +6,4 @@ googlesearch-python
 pycountry
 packaging
 openai
+wikipedia
