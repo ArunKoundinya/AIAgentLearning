@@ -9,3 +9,6 @@ openai
 wikipedia
 newspaper4k 
 lxml_html_clean
+fastapi[standard]
+sqlalchemy
+yfinance
