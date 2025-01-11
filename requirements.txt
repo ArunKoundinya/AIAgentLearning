@@ -7,3 +7,5 @@ pycountry
 packaging
 openai
 wikipedia
+newspaper4k 
+lxml_html_clean
