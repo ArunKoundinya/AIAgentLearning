@@ -27,14 +27,12 @@ def load_csv_from_url(url: str, save_path: str) -> Path:
     """
     try:
         response = httpx.get(url)
-        response.raise_for_status()  # Ensure the request was successful
+        response.raise_for_status()  
 
-        # Define the path to save the file
         save_dir = Path(save_path)
         save_dir.mkdir(parents=True, exist_ok=True)
         csv_file_path = save_dir.joinpath("downloaded_file.csv")
 
-        # Save the file
         csv_file_path.write_bytes(response.content)
         return csv_file_path
 
@@ -46,7 +44,6 @@ def load_csv_from_url(url: str, save_path: str) -> Path:
         raise
 
 def main():
-    # Parse command-line arguments
     parser = argparse.ArgumentParser(description="Download a CSV file and use it in an agent.")
     parser.add_argument("url", type=str, help="URL of the CSV file to download")
     parser.add_argument("--save_path", type=str, default="wip", help="Directory to save the downloaded file")
@@ -58,14 +55,11 @@ def main():
     # Download the CSV file
     csv_file_path = load_csv_from_url(url, save_directory)
 
-    # Verify the downloaded file
-    print(CsvTools(csvs=[csv_file_path]).list_csv_files())
-
-    # Initialize the agent after the file is available
+  
     csv_agent = Agent(
         name="CSV Agent",
         model=groq_model,
-        tools=[CsvTools(csvs=[csv_file_path])],  # Pass the correct file path
+        tools=[CsvTools(csvs=[csv_file_path])], 
         instructions=[
             "List all available files",
             "and run the query to answer the question",
