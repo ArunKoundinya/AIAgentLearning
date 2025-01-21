@@ -13,3 +13,5 @@ fastapi[standard]
 sqlalchemy
 yfinance
 duckdb
+streamlit
+watchdog
