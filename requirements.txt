@@ -15,3 +15,5 @@ yfinance
 duckdb
 streamlit
 watchdog
+pandas
+scikit-learn
