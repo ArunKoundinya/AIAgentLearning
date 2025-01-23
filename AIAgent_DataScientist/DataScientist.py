@@ -5,7 +5,9 @@ from dotenv import load_dotenv
 from phi.run.response import RunEvent, RunResponse
 from randomforest import *
 from phi.tools.pandas import PandasTools
+import ssl
 
+ssl._create_default_https_context = ssl._create_unverified_context
 
 load_dotenv()
 
@@ -18,16 +20,18 @@ DSAnalyst = Agent(
         tools=[RandomForest(),PandasTools()],
         description="You are a Professional Data Scientist",
         instructions=[
-            "Step1: When User shares the csv link load the data using PandasTools",
-            "Step2: After loading dataset from PandasTools pass the dataframe to RandomForest Tool",
-            "Step3: Get the Dictionary from RandomForest and understand and process the result",
-            "Step4: Create a neat summary of the results with respect to the dataset provided",
-            "Step5: If no csv link is provided go through the historical conversations and understand the query and provide answer like a Authentic Data Scientist.",
+            "Step1: When User shares the csv link send to RandomForest Tool",
+            "Step2: Get the Dictionary from RandomForest and understand and process the result",
+            "Step3: Create a neat summary of the results with respect to the dataset provided",
+            "Step4: If no csv link is provided go through the historical conversations and understand the query and provide answer like a Authentic Data Scientist.",
+            "Optional: Use PandasTools to comprehend the dataset if needed."
         ],
         storage=SqlAgentStorage(table_name="DataScientist", db_file="agents.db"),
         add_history_to_messages=True,
+        #show_tool_calls= True,
     )
     
+#DSAnalyst.cli_app(stream=False)
 
 def as_stream(response):
   for chunk in response:
