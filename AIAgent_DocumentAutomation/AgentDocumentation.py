@@ -3,6 +3,8 @@ from phi.agent import Agent
 from phi.model.groq import Groq
 from dotenv import load_dotenv
 from phi.tools.duckduckgo import DuckDuckGo
+import spire.doc as sd
+from spire.doc.common import *
 
 # Load environment variables
 load_dotenv()
@@ -13,7 +15,7 @@ groq_model = Groq(id="llama-3.3-70b-versatile")
 # Create an agent with the model
 web_agent = Agent(
     name="Web Agent",
-    model=groq_model,
+    #model=groq_model,
     tools=[DuckDuckGo()],
     description="You are a highly qualified and experienced reader and writer. You can summarize the information from multiple sources. \
         You are best at reading and summarizing the information with the information at hand.",  ## Role
@@ -59,17 +61,27 @@ web_agent = Agent(
     - [Reference 5](link)
 
     """),
-    show_tool_calls=True,
-    markdown=True,
+    show_tool_calls=False,
     add_datetime_to_instructions=True,
-    save_response_to_file="example.md",
+    save_response_to_file="temp/response.md",
 )
 
-
-# Get the response
 try:
-    response = web_agent.print_response("Tell me about Pushpa2 Movie Story", stream=True)
+    response = web_agent.print_response("Give Me Some Applications of Agentic AI in Bio-Pharma Manufacturing Domain", stream=False)
     print(response)
 except AttributeError as e:
     print(f"Error: {e}")
     print("Check the documentation for the correct method to generate responses.")
+
+
+
+document = sd.Document()
+
+# Load a Markdown file
+document.LoadFromFile("temp/response.md")
+
+# Save it as a docx file
+document.SaveToFile("Response.docx", sd.FileFormat.Docx2016)
+
+# Dispose resources
+document.Dispose()

@@ -17,3 +17,4 @@ streamlit
 watchdog
 pandas
 scikit-learn
+Spire.Doc
